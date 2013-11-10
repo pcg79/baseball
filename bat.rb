@@ -17,12 +17,6 @@ class Bat
   def draw(window)
     color = Gosu::Color::RED
 
-    # window.draw_quad(
-    #   x1, y1, Gosu::Color::RED,
-    #   x1, y2, Gosu::Color::WHITE,
-    #   x2, y2, Gosu::Color::BLUE,
-    #   x2, y1, Gosu::Color::YELLOW
-    # )
     window.draw_quad(
       upper_left[0],  upper_left[1],  Gosu::Color::RED,
       lower_left[0],  lower_left[1],  Gosu::Color::WHITE,
@@ -31,15 +25,6 @@ class Bat
     )
 
     @rotate_angle -= 1
-  end
-
-  def rotate_point
-    x1
-  end
-
-  def rotate_angle
-    # puts "*** @rotate_angle = #{@rotate_angle}"
-    @rotate_angle
   end
 
   def upper_left
@@ -84,6 +69,6 @@ class Bat
 
   def y1
     @y - HEIGHT / 2
-    # 30
+    300
   end
 end
