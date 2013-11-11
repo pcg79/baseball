@@ -6,8 +6,8 @@ class Bat
   attr_reader :x, :y, :rotate_angle
 
   WIDTH = 100
-  HEIGHT = 15
-  EDGE_SIZE = 18
+  HEIGHT = 16
+  EDGE_SIZE = 50
 
 
   def initialize(window, space)
@@ -77,14 +77,14 @@ class Bat
   end
 
   def polygon_image(vertices)
-    box_image = Magick::Image.new(HEIGHT, WIDTH) { self.background_color = 'white' }
+    img = Magick::Image.new(HEIGHT + 1, WIDTH + 1) { self.background_color = 'transparent' }
     gc = Magick::Draw.new
     gc.stroke('red')
-    gc.fill('plum')
-    draw_vertices = vertices.map { |v| [v.x, v.y] }.flatten
+    # gc.fill('plum')
+    draw_vertices = vertices.map { |v| [v.y + (HEIGHT / 2), v.x + (WIDTH / 2)] }.flatten
     gc.polygon(*draw_vertices)
-    gc.draw(box_image)
-    Gosu::Image.new(@window, box_image, false)
+    gc.draw(img)
+    Gosu::Image.new(@window, img, false)
   end
 
   def vertices
@@ -94,5 +94,9 @@ class Bat
       CP::Vec2.new(*upper_right),
       CP::Vec2.new(*upper_left)
     ]
+  end
+
+  def swinging?
+    false
   end
 end
