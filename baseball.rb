@@ -46,8 +46,9 @@ class Baseball < Hasu::Window
   end
 
   def update
-    # if button_down?(Gosu::KbSpace) && !@bat.swinging?
-    # end
+    if button_down?(Gosu::KbSpace) && !@bat.swinging?
+      @ball.pitch!
+    end
 
     SUBSTEPS.times do
       @ball.body.reset_forces
