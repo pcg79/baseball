@@ -8,10 +8,29 @@ class Bat
   WIDTH = 100
   HEIGHT = 15
 
-  def initialize
+  def initialize(space)
     @x = Baseball::WIDTH / 2
     @y = Baseball::HEIGHT - (HEIGHT * 2)
     @rotate_angle = 90
+
+    mass = 10.0
+
+    verts = [
+      CP::Vec2.new(*lower_left),
+      CP::Vec2.new(*lower_right),
+      CP::Vec2.new(*upper_right),
+      CP::Vec2.new(*upper_left)
+    ]
+
+    inertia = CP.moment_for_poly(mass, verts, CP.vzero)
+    @body = CP::Body.new(mass, inertia)
+
+    @shape = CP::Shape::Poly.new(@body, verts, CP.vzero)
+
+    @shape.collision_type = :bat
+
+    space.add_body(@body)
+    space.add_shape(@shape)
   end
 
   def draw(window)
@@ -24,7 +43,7 @@ class Bat
       upper_right[0], upper_right[1], Gosu::Color::YELLOW
     )
 
-    @rotate_angle -= 1
+    # @rotate_angle -= 1
   end
 
   def upper_left
