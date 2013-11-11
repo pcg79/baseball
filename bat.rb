@@ -96,7 +96,14 @@ class Bat
     ]
   end
 
-  def swinging?
-    false
+  def swing!
+    return if moving?
+
+    @body.apply_impulse(CP::Vec2.new(0, -50), CP::Vec2.new(WIDTH, 0))
+  end
+
+  # @body.v = velocity
+  def moving?
+    @body.v.x != 0 || @body.v.y != 0
   end
 end

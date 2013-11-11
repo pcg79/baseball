@@ -46,8 +46,12 @@ class Baseball < Hasu::Window
   end
 
   def update
-    if button_down?(Gosu::KbSpace) && !@bat.swinging?
+    if button_down?(Gosu::KbSpace)
       @ball.pitch!
+    end
+
+    if button_down?(Gosu::KbC)
+      @bat.swing!
     end
 
     SUBSTEPS.times do
