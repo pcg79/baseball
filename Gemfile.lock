@@ -5,6 +5,7 @@ GEM
     gosu (0.7.50)
     hasu (0.1.4)
       gosu
+    rmagick (2.13.2)
 
 PLATFORMS
   ruby
@@ -12,3 +13,4 @@ PLATFORMS
 DEPENDENCIES
   chipmunk
   hasu
+  rmagick
