@@ -3,6 +3,7 @@ require "hasu"
 require 'chipmunk'
 
 class Baseball < Hasu::Window
+  Hasu.load "cp_extensions.rb"
   Hasu.load "ball.rb"
   Hasu.load "bat.rb"
 
@@ -17,6 +18,7 @@ class Baseball < Hasu::Window
     self.caption = "Baseball"
 
     setup_space
+    setup_actors
   end
 
   def setup_space
@@ -30,12 +32,15 @@ class Baseball < Hasu::Window
     @dt = (1.0/60.0)
   end
 
-  def reset
-    setup_space
-
+  def setup_actors
     ball_image = Gosu::Image.new(self, "imgs/rsz_baseball_50x50.png", true)
     @ball = Ball.new(@space, ball_image)
-    @bat  = Bat.new
+    @bat  = Bat.new(@space)
+  end
+
+  def reset
+    setup_space
+    setup_actors
   end
 
   def update
