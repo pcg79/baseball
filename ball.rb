@@ -1,61 +1,30 @@
 class Ball
-  attr_reader :x, :y, :angle, :speed
+  attr_reader :body
 
-  SIZE = 15
+  SIZE = 50
 
-  def initialize
-    @x = Baseball::WIDTH / 2
-    @y = 30
+  def initialize(space, image)
+    mass = 1.0
+    inertia = CP.moment_for_circle(mass, 0, SIZE / 2, CP::Vec2.new(0,0))
+    @body = CP::Body.new(mass, inertia)
+    @shape = CP::Shape::Circle.new(@body, SIZE / 2, CP::Vec2.new(0, 0))
 
-    @angle = 180
-    @speed = 6
+    @shape.body.pos = CP::Vec2.new(Baseball::WIDTH / 2, 30) #position
+    @shape.e = 1.0 #elasticity
+    @shape.u = 0.1 #friction
+    @shape.collision_type = :ball
+
+    # Just a little smack downward to send it moving offset a tiny bit to give it a spin
+    @shape.body.apply_impulse(CP::Vec2.new(0, 10), CP::Vec2.new(10, 0))
+
+    @image = image
+
+    space.add_body(@body)
+    space.add_shape(@shape)
   end
 
-  def draw(window)
-    color = Gosu::Color::WHITE
-
-    window.draw_quad(
-      x1, y1, color,
-      x1, y2, color,
-      x2, y2, color,
-      x2, y1, color
-    )
+  def draw
+    @image.draw_rot(@shape.body.pos.x, @shape.body.pos.y, 1, @shape.body.a.radians_to_gosu)
   end
 
-  def dx; Gosu.offset_x(angle, speed); end
-  def dy; Gosu.offset_y(angle, speed); end
-
-  def move!
-    @x += dx
-    @y += dy
-  end
-
-  def intersect?(surface)
-    x1 < surface.x2 &&
-      x2 > surface.x1 &&
-      y1 < surface.y2 &&
-      y2 > (surface.y1 - 90)
-  end
-
-  def bounce_off!(surface)
-    surface_angle = surface.rotate_angle
-
-    @angle = @angle - (surface_angle * 2)
-  end
-
-  def x1
-    @x - SIZE / 2
-  end
-
-  def x2
-    @x + SIZE / 2
-  end
-
-  def y1
-    @y - SIZE / 2
-  end
-
-  def y2
-    @y + SIZE / 2
-  end
 end

@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "hasu"
+require 'chipmunk'
 
 class Baseball < Hasu::Window
   Hasu.load "ball.rb"
@@ -8,21 +9,43 @@ class Baseball < Hasu::Window
   WIDTH = 640
   HEIGHT = 480
 
+  SUBSTEPS = 10
+
   def initialize
     super(WIDTH, HEIGHT, false)
+
+    self.caption = "Baseball"
+
+    setup_space
+  end
+
+  def setup_space
+    @space = CP::Space.new
+    # @space.damping = 0.001
+    # @space.gravity = CP::Vec2.new(0.0, 100.0)
+    # @space.elastic_iterations = 3
+
+    # @static_body = CP::Body.new((1.0/0.0), (1.0/0.0))
+
+    @dt = (1.0/60.0)
   end
 
   def reset
-    @ball = Ball.new
+    setup_space
+
+    ball_image = Gosu::Image.new(self, "imgs/rsz_baseball_50x50.png", true)
+    @ball = Ball.new(@space, ball_image)
     @bat  = Bat.new
   end
 
   def update
-    @ball.move!
-    # @bat.move!
-
     # if button_down?(Gosu::KbSpace) && !@bat.swinging?
     # end
+
+    SUBSTEPS.times do
+      @ball.body.reset_forces
+      @space.step(@dt)
+    end
 
     if button_down?(Gosu::KbEscape)
       exit
@@ -30,12 +53,8 @@ class Baseball < Hasu::Window
   end
 
   def draw
-    @ball.draw(self)
+    @ball.draw
     @bat.draw(self)
-
-    # if @ball.intersect?(@bat)
-    #   @ball.bounce_off!(@bat)
-    # end
   end
 end
 
