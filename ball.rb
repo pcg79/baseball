@@ -15,7 +15,7 @@ class Ball
     @shape.collision_type = :ball
 
     # Just a little smack downward to send it moving offset a tiny bit to give it a spin
-    @shape.body.apply_impulse(CP::Vec2.new(0, 10), CP::Vec2.new(10, 0))
+    # @shape.body.apply_impulse(CP::Vec2.new(0, 10), CP::Vec2.new(10, 0))
 
     @image = image
 
@@ -25,5 +25,9 @@ class Ball
 
   def draw
     @image.draw_rot(@body.pos.x, @body.pos.y, 1, @body.a.radians_to_gosu)
+  end
+
+  def pitch!
+    @shape.body.apply_impulse(CP::Vec2.new(0, 10), CP::Vec2.new(10, 0))
   end
 end
