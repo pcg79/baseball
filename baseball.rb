@@ -1,6 +1,8 @@
 require "bundler/setup"
 require "hasu"
 require 'chipmunk'
+require 'RMagick'
+
 
 class Baseball < Hasu::Window
   Hasu.load "cp_extensions.rb"
@@ -35,7 +37,7 @@ class Baseball < Hasu::Window
   def setup_actors
     ball_image = Gosu::Image.new(self, "imgs/rsz_baseball_50x50.png", true)
     @ball = Ball.new(@space, ball_image)
-    @bat  = Bat.new(@space)
+    @bat  = Bat.new(self, @space)
   end
 
   def reset
@@ -53,7 +55,7 @@ class Baseball < Hasu::Window
     end
 
     if button_down?(Gosu::KbEscape)
-      exit
+      close
     end
   end
 
