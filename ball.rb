@@ -26,5 +26,4 @@ class Ball
   def draw
     @image.draw_rot(@body.pos.x, @body.pos.y, 1, @body.a.radians_to_gosu)
   end
-
 end

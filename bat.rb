@@ -40,23 +40,17 @@ class Bat
   end
 
   def upper_left
-    ul = [
+    [
       x1,
       y1
     ]
-
-    # puts "*** ul = #{ul}"
-    ul
   end
 
   def lower_left
-    ll = [
+    [
       x1 + Gosu.offset_x(rotate_angle + 90, HEIGHT),
       y1 + Gosu.offset_y(rotate_angle + 90, HEIGHT)
     ]
-
-    # puts "*** ll = #{ll}"
-    ll
   end
 
   def upper_right
