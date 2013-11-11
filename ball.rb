@@ -5,9 +5,9 @@ class Ball
 
   def initialize(space, image)
     mass = 1.0
-    inertia = CP.moment_for_circle(mass, 0, SIZE / 2, CP::Vec2.new(0,0))
+    inertia = CP.moment_for_circle(mass, 0, SIZE / 2, CP::ZERO_VEC_2)
     @body = CP::Body.new(mass, inertia)
-    @shape = CP::Shape::Circle.new(@body, SIZE / 2, CP::Vec2.new(0, 0))
+    @shape = CP::Shape::Circle.new(@body, SIZE / 2, CP::ZERO_VEC_2)
 
     @shape.body.pos = CP::Vec2.new(Baseball::WIDTH / 2, 30) #position
     @shape.e = 1.0 #elasticity

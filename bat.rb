@@ -18,11 +18,11 @@ class Bat
 
     mass = 10.0
 
-    inertia = CP.moment_for_poly(mass, vertices, CP::Vec2.zero)
+    inertia = CP.moment_for_poly(mass, vertices, CP::ZERO_VEC_2)
     @body = CP::Body.new(mass, inertia)
     @body.p = CP::Vec2.new(Baseball::WIDTH / 2, Baseball::HEIGHT - (HEIGHT * 2))
 
-    @shape = CP::Shape::Poly.new(@body, vertices, CP::Vec2.zero)
+    @shape = CP::Shape::Poly.new(@body, vertices, CP::ZERO_VEC_2)
 
     @image = polygon_image(vertices)
     @shape.collision_type = :bat
