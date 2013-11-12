@@ -3,7 +3,7 @@
 # track the bat from the upper left corner.  All other points are calculated from that point * the rotate angle
 
 class Bat
-  attr_reader :x, :y, :rotate_angle
+  attr_reader :rotate_angle
 
   WIDTH = 16
   HEIGHT = 100
@@ -12,8 +12,6 @@ class Bat
 
   def initialize(window, space)
     @window = window
-    @x = 0
-    @y = 0
     @rotate_angle = 90
     @static_body = CP::BodyStatic.new
 
@@ -74,11 +72,11 @@ class Bat
   end
 
   def x1
-    @x - WIDTH / 2
+    - WIDTH / 2
   end
 
   def y1
-    @y - HEIGHT / 2
+    - HEIGHT / 2
   end
 
   def polygon_image(vertices)
