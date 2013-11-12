@@ -5,8 +5,8 @@
 class Bat
   attr_reader :x, :y, :rotate_angle
 
-  WIDTH = 100
-  HEIGHT = 16
+  WIDTH = 16
+  HEIGHT = 100
   EDGE_SIZE = 50
 
 
@@ -21,9 +21,10 @@ class Bat
 
     inertia = CP.moment_for_poly(mass, vertices, CP::ZERO_VEC_2)
     @body = CP::Body.new(mass, inertia)
-    @body.p = CP::Vec2.new(Baseball::WIDTH / 2, Baseball::HEIGHT - (HEIGHT * 2))
+    @body.p = CP::Vec2.new(Baseball::WIDTH / 2 - 40, Baseball::HEIGHT - HEIGHT)
 
-    pivot_location = @body.p + CP::Vec2.new(( - WIDTH / 2) + 10, 0)
+    # This put the pivot at the very top middle of the bat
+    pivot_location = @body.p + CP::Vec2.new(0, ( - HEIGHT / 2))
 
     pj = CP::PivotJoint.new @body, @static_body, pivot_location
 
@@ -103,7 +104,8 @@ class Bat
   def swing!
     return if moving?
 
-    @body.apply_impulse(CP::Vec2.new(0, -50), CP::Vec2.new(WIDTH, 0))
+    # Apply 100 force the left to 100 pixels past end of the bat
+    @body.apply_impulse(CP::Vec2.new(-100, 0), CP::Vec2.new(0, - HEIGHT - 100))
   end
 
   # @body.v = velocity
