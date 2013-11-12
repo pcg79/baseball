@@ -15,6 +15,7 @@ class Bat
     @x = 0
     @y = 0
     @rotate_angle = 90
+    @static_body = CP::BodyStatic.new
 
     mass = 10.0
 
@@ -22,11 +23,16 @@ class Bat
     @body = CP::Body.new(mass, inertia)
     @body.p = CP::Vec2.new(Baseball::WIDTH / 2, Baseball::HEIGHT - (HEIGHT * 2))
 
+    pivot_location = @body.p + CP::Vec2.new(( - WIDTH / 2) + 10, 0)
+
+    pj = CP::PivotJoint.new @body, @static_body, pivot_location
+
     @shape = CP::Shape::Poly.new(@body, vertices, CP::ZERO_VEC_2)
 
     @image = polygon_image(vertices)
     @shape.collision_type = :bat
 
+    space.add_constraint(pj)
     space.add_body(@body)
     space.add_shape(@shape)
   end
