@@ -19,7 +19,7 @@ class Bat
 
     inertia = CP.moment_for_poly(mass, vertices, CP::ZERO_VEC_2)
     @body = CP::Body.new(mass, inertia)
-    @body.p = CP::Vec2.new(Baseball::WIDTH / 2 - 40, Baseball::HEIGHT - HEIGHT)
+    @body.p = CP::Vec2.new(Baseball::WIDTH / 2 - HEIGHT + 20, Baseball::HEIGHT - HEIGHT)
 
     # This put the pivot at the very top middle of the bat
     pivot_location = @body.p + CP::Vec2.new(0, ( - HEIGHT / 2))
