@@ -1,11 +1,19 @@
-require "bundler/setup"
+# require "rubygems"
+
+# CP_PATHS = "/Users/patrickgeorge/.rvm/gems/ruby-2.0.0-p247@game_dev/gems/chipmunk-5.3.4.5/lib"
+# CP_EXACT_PATH = "/Users/patrickgeorge/.rvm/gems/ruby-2.0.0-p247@game_dev/gems/chipmunk-5.3.4.5/lib/chipmunk.bundle"
+
 require "hasu"
 require 'chipmunk'
+
+require 'ffi'
+require 'nice-ffi'
+require 'chipmunk-ffi'
+
 require 'RMagick'
 
 
 class Baseball < Hasu::Window
-  Hasu.load "cp_extensions.rb"
   Hasu.load "ball.rb"
   Hasu.load "bat.rb"
 
